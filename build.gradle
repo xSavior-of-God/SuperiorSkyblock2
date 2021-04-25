@@ -39,7 +39,6 @@ repositories {
     maven { url 'https://repo.bg-software.com/repository/public-libs/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.songoda.com/repository/public/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 
 }
 
@@ -77,7 +76,7 @@ dependencies {
     compileOnly 'me.clip:PlaceholderAPI:latest'
     compileOnly 'skyblock.hassan:PvpingSpawners:latest'
     compileOnly 'dev.rosewood:RoseStacker:latest'
-    compileOnly 'com.github.brcdev-minecraft:shopgui-api:2.2.0' //JITPACK
+    compileOnly files('/libs/shopgui-api-2.2.0.jar') //JITPACK
     compileOnly 'de.candc:SilkSpawners:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer14:latest'
