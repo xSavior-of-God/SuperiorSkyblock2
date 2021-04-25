@@ -112,11 +112,14 @@ public final class EventsCaller {
     }
 
     public static boolean callIslandDisbandEvent(SuperiorPlayer superiorPlayer, Island island){
+        System.out.println("§eSTART EVENT DISBAND CALLED... ");
         if(plugin.getSettings().disabledEvents.contains("islanddisbandevent"))
             return true;
 
+        System.out.println("§6CALL EVENT DISBAND CALLED... ");
         IslandDisbandEvent islandDisbandEvent = new IslandDisbandEvent(superiorPlayer, island);
         Bukkit.getPluginManager().callEvent(islandDisbandEvent);
+        System.out.println("§aFINISH EVENT DISBAND CALLED... "+islandDisbandEvent.isCancelled());
         return !islandDisbandEvent.isCancelled();
     }
 
@@ -140,18 +143,23 @@ public final class EventsCaller {
     }
 
     public static void callIslandKickEvent(SuperiorPlayer superiorPlayer, SuperiorPlayer targetPlayer, Island island){
+        System.out.println("§6CALL EVENT KICK CALLED...");
         if(!plugin.getSettings().disabledEvents.contains("islandkickevent")) {
             IslandKickEvent islandKickEvent = new IslandKickEvent(superiorPlayer, targetPlayer, island);
             Bukkit.getPluginManager().callEvent(islandKickEvent);
+            System.out.println("§aFINISH EVENT KICK CALLED... ");
         }
     }
 
     public static boolean callIslandQuitEvent(SuperiorPlayer superiorPlayer, Island island){
+        System.out.println("§eSTART EVENT QUIT CALLED...");
         if(plugin.getSettings().disabledEvents.contains("islandquitevent"))
             return true;
 
+        System.out.println("§6QUIT EVENT QUIT CALLED...");
         IslandQuitEvent islandQuitEvent = new IslandQuitEvent(superiorPlayer, island);
         Bukkit.getPluginManager().callEvent(islandQuitEvent);
+        System.out.println("§aQUIT EVENT QUIT RESPONSE... "+islandQuitEvent.isCancelled());
         return !islandQuitEvent.isCancelled();
     }
 

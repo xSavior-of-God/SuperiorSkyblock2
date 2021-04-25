@@ -37,20 +37,8 @@ repositories {
     maven { url 'https://repo.bg-software.com/repository/api/' }
     maven { url 'https://repo.bg-software.com/repository/common/' }
     maven { url 'https://repo.bg-software.com/repository/public-libs/' }
-
-    String mavenUsername = project.hasProperty('mavenUsername') ? project.mavenUsername : System.getenv('mavenUsername');
-    String mavenPassword = project.hasProperty('mavenPassword') ? project.mavenPassword : System.getenv('mavenPassword');
-
-    if(mavenUsername != null && mavenPassword != null) {
-        maven {
-            url 'https://repo.bg-software.com/repository/private-libs/'
-            credentials {
-                username mavenUsername
-                password mavenPassword
-            }
-        }
-    }
-
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.songoda.com/repository/public/' }
 }
 
 dependencies {
@@ -69,23 +57,25 @@ dependencies {
     compileOnly 'org.spigotmc:v1_16_R3-Tuinity:latest'
 
     // Plugin hooks
-    compileOnly 'gcspawners:AdvancedSpawners:latest'
+    //compileOnly 'gcspawners:AdvancedSpawners:latest' // da rimuovere
     compileOnly 'com.github.games647:ChangeSkin:latest'
-    compileOnly 'com.zrips:CMI:latest'
+        //compileOnly 'com.zrips:CMI:latest'//LIB
+    compileOnly files('/libs/CMIAPI7.6.2.0.jar')
     compileOnly 'net.coreprotect:CoreProtect-6:latest'
-    compileOnly 'com.songoda:EpicSpawners-6:latest'
+    compileOnly 'com.songoda:epicspawners:6-pre4' // SONGODA REPO
     compileOnly 'com.earth2me:Essentials-2.16:latest'
     compileOnly 'com.boydti:FastAsyncWorldEdit:latest'
-    compileOnly 'me.jet315:JetsMinions:latest'
+    //compileOnly 'me.jet315:JetsMinions:latest' // da rimuovere
     compileOnly 'me.robin:LeaderHeads:latest'
     compileOnly 'net.luckperms:LuckPerms:latest'
     compileOnly 'net.luckperms:LuckPerms:latest'
-    compileOnly 'com.vk2gpz:MergedSpawner:latest'
+        //compileOnly 'com.vk2gpz:MergedSpawner:latest' //LIB
+    compileOnly files('/libs/MergedSpawner-12.4.1.jar')
     compileOnly 'be.maximvdw:MVdWPlaceholderAPI:latest'
     compileOnly 'me.clip:PlaceholderAPI:latest'
     compileOnly 'skyblock.hassan:PvpingSpawners:latest'
     compileOnly 'dev.rosewood:RoseStacker:latest'
-    compileOnly 'net.brcdev:ShopGUIPlus-1.20:latest'
+    compileOnly 'com.github.brcdev-minecraft:shopgui-api:latest' //JITPACK
     compileOnly 'de.candc:SilkSpawners:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer14:latest'
