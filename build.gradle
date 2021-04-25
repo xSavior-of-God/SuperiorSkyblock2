@@ -39,6 +39,7 @@ repositories {
     maven { url 'https://repo.bg-software.com/repository/public-libs/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.songoda.com/repository/public/' }
+
 }
 
 dependencies {
@@ -62,7 +63,7 @@ dependencies {
         //compileOnly 'com.zrips:CMI:latest'//LIB
     compileOnly files('/libs/CMIAPI7.6.2.0.jar')
     compileOnly 'net.coreprotect:CoreProtect-6:latest'
-    compileOnly 'com.songoda:epicspawners:6-pre4' // SONGODA REPO
+    compileOnly files('/libs/epicspawners-6-pre4.jar') // SONGODA REPO
     compileOnly 'com.earth2me:Essentials-2.16:latest'
     compileOnly 'com.boydti:FastAsyncWorldEdit:latest'
     //compileOnly 'me.jet315:JetsMinions:latest' // da rimuovere
