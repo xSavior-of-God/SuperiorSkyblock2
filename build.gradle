@@ -76,7 +76,7 @@ dependencies {
     compileOnly 'me.clip:PlaceholderAPI:latest'
     compileOnly 'skyblock.hassan:PvpingSpawners:latest'
     compileOnly 'dev.rosewood:RoseStacker:latest'
-    compileOnly 'com.github.brcdev-minecraft:shopgui-api:latest' //JITPACK
+    compileOnly 'com.github.brcdev-minecraft:shopgui-api:2.2.0' //JITPACK
     compileOnly 'de.candc:SilkSpawners:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer:latest'
     compileOnly 'net.skinsrestorer:SkinsRestorer14:latest'
