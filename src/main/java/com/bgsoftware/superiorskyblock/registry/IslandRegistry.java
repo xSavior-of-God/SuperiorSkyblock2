@@ -1,13 +1,16 @@
 package com.bgsoftware.superiorskyblock.registry;
 
+import com.bgsoftware.superiorskyblock.SuperiorSkyblockPlugin;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 import com.bgsoftware.superiorskyblock.api.island.SortingType;
 import com.bgsoftware.superiorskyblock.island.IslandPosition;
 import com.bgsoftware.superiorskyblock.utils.registry.Registry;
 import com.bgsoftware.superiorskyblock.utils.registry.SortedRegistry;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class IslandRegistry extends SortedRegistry<UUID, Island, SortingType> {
@@ -16,8 +19,10 @@ public final class IslandRegistry extends SortedRegistry<UUID, Island, SortingTy
 
     private final Registry<IslandPosition, Island> islandsByPositions = createRegistry();
     private final Registry<UUID, Island> islandsByUUID = createRegistry();
+    private final SuperiorSkyblockPlugin plugin;
 
-    public IslandRegistry(){
+    public IslandRegistry(SuperiorSkyblockPlugin plugin){
+        this.plugin = plugin;
         SortingType.values().forEach(sortingType -> registerSortingType(sortingType, false, ISLANDS_PREDICATE));
     }
 
@@ -31,8 +36,18 @@ public final class IslandRegistry extends SortedRegistry<UUID, Island, SortingTy
     }
 
     public Island add(UUID uuid, Island island){
-        islandsByPositions.add(IslandPosition.of(island), island);
+        Location islandLocation = island.getCenter(World.Environment.NORMAL);
+        islandsByPositions.add(IslandPosition.of(islandLocation), island);
+
+        if(plugin.getProviders().hasCustomWorldsSupport()){
+            runWithCustomWorld(islandLocation, island, World.Environment.NETHER,
+                    location -> islandsByPositions.add(IslandPosition.of(location), island));
+            runWithCustomWorld(islandLocation, island, World.Environment.THE_END,
+                    location -> islandsByPositions.add(IslandPosition.of(location), island));
+        }
+
         islandsByUUID.add(island.getUniqueId(), island);
+
         return super.add(uuid, island);
     }
 
@@ -40,7 +55,16 @@ public final class IslandRegistry extends SortedRegistry<UUID, Island, SortingTy
     public Island remove(UUID uuid){
         Island island = super.remove(uuid);
         if(island != null) {
-            islandsByPositions.remove(IslandPosition.of(island));
+            Location islandLocation = island.getCenter(World.Environment.NORMAL);
+            islandsByPositions.remove(IslandPosition.of(islandLocation));
+
+            if(plugin.getProviders().hasCustomWorldsSupport()){
+                runWithCustomWorld(islandLocation, island, World.Environment.NETHER,
+                        location -> islandsByPositions.remove(IslandPosition.of(location)));
+                runWithCustomWorld(islandLocation, island, World.Environment.THE_END,
+                        location -> islandsByPositions.remove(IslandPosition.of(location)));
+            }
+
             islandsByUUID.remove(island.getUniqueId());
         }
         return island;
@@ -58,6 +82,14 @@ public final class IslandRegistry extends SortedRegistry<UUID, Island, SortingTy
         Island island = get(oldOwner);
         remove(oldOwner);
         add(newOwner, island);
+    }
+
+    private void runWithCustomWorld(Location islandLocation, Island island, World.Environment environment, Consumer<Location> onSuccess){
+        try{
+            Location location = island.getCenter(environment);
+            if(!location.getWorld().equals(islandLocation.getWorld()))
+                onSuccess.accept(location);
+        }catch (Exception ignored){}
     }
 
 }

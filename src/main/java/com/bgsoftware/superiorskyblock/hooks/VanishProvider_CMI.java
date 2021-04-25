@@ -1,14 +1,8 @@
 package com.bgsoftware.superiorskyblock.hooks;
 
-import com.Zrips.CMI.CMI;
-import com.Zrips.CMI.events.CMIPlayerUnVanishEvent;
-import com.Zrips.CMI.events.CMIPlayerVanishEvent;
 import com.bgsoftware.superiorskyblock.SuperiorSkyblockPlugin;
-import com.bgsoftware.superiorskyblock.listeners.PlayersListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public final class VanishProvider_CMI implements VanishProvider, Listener {
@@ -30,17 +24,7 @@ public final class VanishProvider_CMI implements VanishProvider, Listener {
 
     @Override
     public boolean isVanished(Player player) {
-        return CMI.getInstance().getVanishManager().getAllVanished().contains(player.getUniqueId());
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerVanish(CMIPlayerVanishEvent e){
-        PlayersListener.handlePlayerQuit(plugin.getPlayers().getSuperiorPlayer(e.getPlayer()));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerUnvanish(CMIPlayerUnVanishEvent e){
-        PlayersListener.handlePlayerJoin(plugin.getPlayers().getSuperiorPlayer(e.getPlayer()));
+        return false;
     }
 
 }

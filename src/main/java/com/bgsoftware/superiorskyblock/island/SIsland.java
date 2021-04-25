@@ -65,6 +65,7 @@ import com.bgsoftware.superiorskyblock.api.objects.Pair;
 import com.bgsoftware.superiorskyblock.utils.islands.IslandUtils;
 import com.bgsoftware.superiorskyblock.utils.islands.SortingComparators;
 import com.bgsoftware.superiorskyblock.utils.islands.SortingTypes;
+import com.bgsoftware.superiorskyblock.utils.key.ConstantKeys;
 import com.bgsoftware.superiorskyblock.utils.key.Key;
 import com.bgsoftware.superiorskyblock.utils.legacy.Materials;
 import com.bgsoftware.superiorskyblock.utils.key.KeyMap;
@@ -157,7 +158,7 @@ public final class SIsland implements Island {
     private final SyncedObject<BigDecimal> bonusLevel = SyncedObject.of(BigDecimal.ZERO);
     private final SyncedObject<String> discord = SyncedObject.of("None");
     private final SyncedObject<String> paypal = SyncedObject.of("None");
-    private final SyncedObject<Location[]> teleportLocations = SyncedObject.of(new Location[3]);
+    private final SyncedObject<Location[]> teleportLocations = SyncedObject.of(new Location[World.Environment.values().length]);
     private final SyncedObject<Location> visitorsLocation = SyncedObject.of(null);
     private final SyncedObject<Boolean> locked = SyncedObject.of(false);
     private final SyncedObject<String> islandName = SyncedObject.of("");
@@ -181,7 +182,7 @@ public final class SIsland implements Island {
 
     private final SyncedObject<KeyMap<UpgradeValue<Integer>>> blockLimits = SyncedObject.of(new KeyMap<>());
     @SuppressWarnings("all")
-    private final SyncedObject<KeyMap<UpgradeValue<Integer>>>[] cobbleGeneratorValues = new SyncedObject[3];
+    private final SyncedObject<KeyMap<UpgradeValue<Integer>>>[] cobbleGeneratorValues = new SyncedObject[World.Environment.values().length];
     private final SyncedObject<KeyMap<UpgradeValue<Integer>>> entityLimits = SyncedObject.of(new KeyMap<>());
     private final SyncedObject<Map<PotionEffectType, UpgradeValue<Integer>>> islandEffects = SyncedObject.of(new HashMap<>());
 
@@ -1239,7 +1240,8 @@ public final class SIsland implements Island {
         Executor.createTask().runAsync(v -> {
             chunksToLoad.forEachCompleted(calculatedChunk -> {
                 // We want to remove spawners from the chunkInfo, as it will be used later
-                calculatedChunk.getBlockCounts().remove(Key.of(Materials.SPAWNER.toBukkitType().name()));
+                calculatedChunk.getBlockCounts().removeIf(key ->
+                        key.getGlobalKey().equals(ConstantKeys.MOB_SPAWNER.getGlobalKey()));
 
                 // Load block counts
                 handleBlocksPlace(calculatedChunk.getBlockCounts(), false, blockCounts, islandWorth, islandLevel);

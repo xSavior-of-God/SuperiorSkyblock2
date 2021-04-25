@@ -506,7 +506,7 @@ public final class SIslandDataHandler extends DatabaseObject implements IslandDa
     }
 
     private Map<Key, Integer>[] getIslandGenerators(){
-        Map<Key, Integer>[] customGeneratorAmounts = new Map[3];
+        Map<Key, Integer>[] customGeneratorAmounts = new Map[World.Environment.values().length];
         for(World.Environment environment : World.Environment.values())
             customGeneratorAmounts[environment.ordinal()] = island.getCustomGeneratorAmounts(environment);
         return customGeneratorAmounts;
