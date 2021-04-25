@@ -39,6 +39,7 @@ repositories {
     maven { url 'https://repo.bg-software.com/repository/public-libs/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.songoda.com/repository/public/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 
 }
 
